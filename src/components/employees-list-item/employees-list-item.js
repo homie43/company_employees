@@ -1,6 +1,6 @@
 import './employees-list-item.css';
 
-const EmployeesListItem = ({name, salary}) => { // деструктуризируем пропс
+const EmployeesListItem = ({name, salary}) => { // получаем данные из EmployeesList, деструктуризируем пропс, помещаем на страницу
     return (
         <li className="list-group-item d-flex justify-content-between">
             <span className="list-group-item-label">{name}</span>

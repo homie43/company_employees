@@ -8,6 +8,14 @@ import './app.css';
 
 
 function App() {
+
+    // имитируем get запрос с сервера для теста пропсов
+    const data = [
+        {name: "Steaphen King", salary: 300},
+        {name: "Vladimir Kopylov", salary: 500},
+        {name: "Elton John", salary: 1500}
+    ];
+
     return (
         <div className="app">
             <AppInfo/>
@@ -18,7 +26,7 @@ function App() {
                 <AppFilter/>
             </div>
 
-            <EmployeesList/>
+            <EmployeesList data={data}/> {/* передаю в компонент массив с данными */}
             <EmployeesAddForm/>
         </div>
     );
