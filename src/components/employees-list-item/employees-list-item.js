@@ -1,8 +1,11 @@
 import './employees-list-item.css';
 
-const EmployeesListItem = ({name, salary}) => { // получаем данные из EmployeesList, деструктуризируем пропс, помещаем на страницу
+const EmployeesListItem = ({name, salary, increase}) => { // получаем данные из EmployeesList, деструктуризируем пропс, помещаем на страницу
+
+    const classIncrease = increase ? 'increase' : "";
+
     return (
-        <li className="list-group-item d-flex justify-content-between">
+        <li className={"list-group-item d-flex justify-content-between " + classIncrease}>
             <span className="list-group-item-label">{name}</span>
             <input type="text" className="list-group-item-input" defaultValue={salary + "$"}/>
             <div className='d-flex justify-content-center align-items-center'>

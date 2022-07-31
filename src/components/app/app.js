@@ -11,9 +11,9 @@ function App() {
 
     // имитируем get запрос с сервера для теста пропсов
     const data = [
-        {name: "Steaphen King", salary: 300},
-        {name: "Vladimir Kopylov", salary: 500},
-        {name: "Elton John", salary: 1500}
+        {name: "Steaphen King", salary: 300, increase: true},
+        {name: "Vladimir Kopylov", salary: 500, increase: false},
+        {name: "Elton John", salary: 1500, increase: false}
     ];
 
     return (
