@@ -4,9 +4,9 @@ import "./employees-list.css";
 const EmployeesList = () => {
     return (
         <ul className="app-list list-group">
-            <EmployeesListItem/>
-            <EmployeesListItem/>
-            <EmployeesListItem/>
+            <EmployeesListItem name="Steaphen King" salary={300} /> {/* props устанавливаем тут, выводим на стр в ...list-item.js */}
+            <EmployeesListItem name="Vladimir Kopylov" salary={500} />
+            <EmployeesListItem name="Elton John" salary={1200} />
         </ul>
     )
 }
