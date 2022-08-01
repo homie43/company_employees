@@ -5,8 +5,9 @@ const EmployeesList = ({data}) => { // компонент принимает д�
 
     // переберем каждый элемент массива data(это объекты с свойствами name и salary)
     const elements = data.map(item => {
+        const {id, ...itemProps} = item;
         return (
-            <EmployeesListItem /* name={item.name} salary={item.salary} */ /* вариант со spread оператором */{...item}  /> // тут назначаются пропсы, далее они идут в EmployeesListItem
+            <EmployeesListItem key ={id} {...itemProps}  /> // тут назначаются пропсы, далее они идут в EmployeesListItem
         );
     });
 
