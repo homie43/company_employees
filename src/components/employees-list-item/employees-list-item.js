@@ -1,4 +1,3 @@
-import { toHaveValue } from '@testing-library/jest-dom/dist/matchers';
 import { Component } from 'react';
 import './employees-list-item.css';
 
@@ -8,6 +7,7 @@ class EmployeesListItem extends Component { // получаем данные и�
         super(props);
         this.state = {
             increase: false,
+            like: false
         }
     }
 
@@ -17,17 +17,26 @@ class EmployeesListItem extends Component { // получаем данные и�
         }))
     }
 
+    onLike = () => {
+        this.setState(({like}) => ({
+            like: !like
+        }))
+    }
+
     render() {
 
         const {name, salary} = this.props;
-        // теперь increase должен приходить не из props, а из state
-        const {increase} = this.state;
+        // теперь increase, like должен приходить не из props, а из state
+        const {increase} = this.state,
+              {like} = this.state;
 
-        const classIncrease = increase ? 'increase' : "";
+
+        const classIncrease = increase ? ' increase' : "";
+        const classLike = like ? ' like' : "";
     
         return (
-            <li className={"list-group-item d-flex justify-content-between " + classIncrease}>
-                <span className="list-group-item-label">{name}</span>
+            <li className={"list-group-item d-flex justify-content-between" + classIncrease + classLike}>
+                <span className="list-group-item-label" onClick={this.onLike}>{name}</span>
                 <input type="text" className="list-group-item-input" defaultValue={salary + "$"}/>
                 <div className='d-flex justify-content-center align-items-center'>
                     <button type="button" /* иконка куки */
