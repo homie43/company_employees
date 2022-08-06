@@ -25,8 +25,7 @@ class EmployeesListItem extends Component { // получаем данные и�
 
     render() {
 
-        const {name, salary} = this.props;
-        // теперь increase, like должен приходить не из props, а из state
+        const {name, salary, onDelete} = this.props; // пропс onDelete из EmployeesList, вешаем обработчик на кнопку корзины ниже
         const {increase} = this.state,
               {like} = this.state;
 
@@ -45,8 +44,11 @@ class EmployeesListItem extends Component { // получаем данные и�
                         <i className="fas fa-cookie"></i>
                     </button>
 
+
+                    {/* при клике на корзинку, соответсвующий сотрудник удалится из данных(date), react увидит это изменение и сразу перерисует соответсвующую часть приложения */}
                     <button type="button" /* иконка корзина */
-                            className="btn-trash btn-sm ">
+                            className="btn-trash btn-sm "
+                            onClick={onDelete}>
                         <i className="fas fa-trash"></i>
                     </button>
                     <i className="fas fa-star"></i>
