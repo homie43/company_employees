@@ -21,23 +21,34 @@ class App extends Component {
                 {name: "Elton John", salary: 1500, like: false, increase: false, id: 3}
             ]
         }
+        this.maxId = 4; // это значение необходимо для новых сотрудников, что бы увеличивался их id
     }
     
     // метод по иерархии идет на самый низ (в EmployeesListItem) и вызывается по клику на корзину
     deleteItem = (id) => {
         this.setState(({data}) => {
             // алгоритм удаления: 1) получаем элемент(сотрудника) по id; 2) по id ищем нужный объект(то есть индекс) внутри массива data 3) создаем копию массива и перерисовываем приложение
-            
-            // const index = data.findIndex(element => element.id === id); // сравниваем id кадого element(это каждый объект внутри data) с id который приходит от deleteItem
-            // const before = data.slice(0, index); // копируем data с 1 элемента, до элемента, который нашли(index) 
-            // const after = data.slice(index + 1);
-            // // создали кусочка массива, которые содержат половинки старого массива, только без искомого эллемента
-            
-            // const newArrow = [...before, ...after]; // создаем новый массив содержаший before и after
 
             // короткий способ, внутри return
             return {
                 data: data.filter(item => item.id !== id)
+            }
+        })
+    }
+
+    // добавление нового объекта в массив 
+    addItem = (name, salary) => {
+        // алгоритм добавления: 1) создаем newItem, он содержит объект с нужными атрибутами; 2) изменяем состояние: то есть возвращаем новый data, который содержит часть предыдущего data и новый объект; 3) не забываем передать в компонент EmployeesAddForm нашу функцию; 4) в EmployeesAddForm прописываем onSubmit - это обработчик события на form
+        const newItem = {
+            name,
+            salary,
+            like: false,
+            increase: false,
+            id: this.maxId++ // не забываем увеличивать id
+        }
+        this.setState(({data}) => {
+            return {
+                data: [...data, newItem]
             }
         })
     }
@@ -58,7 +69,7 @@ class App extends Component {
                     data={this.state.data}
                     onDelete={this.deleteItem}
                     /> {/* передаю в компонент массив с данными */}
-                <EmployeesAddForm/>
+                <EmployeesAddForm onAdd={this.addItem}/> {/* не забывай передать в компонент */}
             </div>
         );
     }
