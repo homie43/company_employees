@@ -53,11 +53,49 @@ class App extends Component {
         })
     }
 
+    // алгоритм: берем объект с которым взимодейтсвет user, делаем копию, поменять в нем свойство, создать новый state, поменять его в компоненте
+    // метод изменяет increase на противоположный у сотрудника
+    onToggleIncrease = (id) => {
+        
+        // this.setState(({data}) => {
+        //     const index = data.findIndex(elem => elem.id === id);
+            
+        //     const old = data[index];
+        //     const newItem = {...old, increase: !old.increase} // созд новое свойство, которое берет increase, меняет его на противоположное и записывает в newItem[increase]
+        //     const newArray = [...data.slice(0, index), newItem, ...data.slice(index + 1)]
+
+        //     return {
+        //         data: newArray
+        //     }
+        // })
+
+        this.setState(({data}) => ({ // объект пеменять напрямую не можем, по этому мы вовзращаем новый объект
+            data: data.map(item => { // свойство data: это новый массив data
+                if (item.id === id) { // и если совпали id, то значит нашелся нужный объект
+                    return {...item, increase: !item.increase} // возращается новый объект, который содержит все старые свойства ...item + increase, который поменялся на противоположный(true)
+                }
+                return item; // если условие не выполнено, id не равны, то просто возвращаем объект 
+                // по итогу получаем массив data с новым измененным объектом
+            })
+        }))
+    }
+    // метод изменяет like на противоположный у сотрудника
+    onToggleLike = (id) => {
+        this.setState(({data}) => ({
+            data: data.map(item => {
+                if (item.id === id) {
+                    return {...item, like: !item.like}
+                }
+                return item;
+            })
+        }))
+    }
+
 
     render() {
         return (
             <div className="app">
-                <AppInfo/>
+                <AppInfo />
 
                 <div className="search-panel">
                     <SaerchPanel/>
@@ -65,10 +103,12 @@ class App extends Component {
                     <AppFilter/>
                 </div>
 
-                <EmployeesList 
+                <EmployeesList /* передаю в компонент массив с данными */
                     data={this.state.data}
                     onDelete={this.deleteItem}
-                    /> {/* передаю в компонент массив с данными */}
+                    onToggleIncrease={this.onToggleIncrease}
+                    onToggleLike={this.onToggleLike}
+                    />
                 <EmployeesAddForm onAdd={this.addItem}/> {/* не забывай передать в компонент */}
             </div>
         );

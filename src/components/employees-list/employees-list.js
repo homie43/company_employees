@@ -1,7 +1,7 @@
 import EmployeesListItem from '../employees-list-item/employees-list-item';
 import "./employees-list.css";
 
-const EmployeesList = ({data, onDelete}) => { // компонент принимает данные data из app.js // onDelete получили из компонента app.js и используем ниже по коду
+const EmployeesList = ({data, onDelete, onToggleIncrease, onToggleLike}) => { // компонент принимает данные data из app.js для использования
 
     // переберем каждый элемент массива data(это объекты с свойствами name и salary)
     const elements = data.map(item => {
@@ -11,6 +11,8 @@ const EmployeesList = ({data, onDelete}) => { // компонент приним
                 key ={id} 
                 {...itemProps}  
                 onDelete={() => onDelete(id)} // в пропс передаем функцию, далее мы можем ее использовать по иерархии ниже, в EmployeesListItem // onDelete(id) позволит в консоль вывести id кадого сотрудника
+                onToggleIncrease={() => onToggleIncrease(id)}
+                onToggleLike={() => onToggleLike(id)}
                 /> // тут назначаются пропсы, далее они идут в EmployeesListItem
         );
     });
