@@ -19,7 +19,8 @@ class App extends Component {
                 {name: "Steaphen King", salary: 300, like: false, increase: false, id: 1}, // добавил id для проработки аогрритма согласования (reconciliation)
                 {name: "Vladimir Kopylov", salary: 500, like: false, increase: false, id: 2},
                 {name: "Elton John", salary: 1500, like: false, increase: false, id: 3}
-            ]
+            ],
+            term: ''
         }
         this.maxId = 4; // это значение необходимо для новых сотрудников, что бы увеличивался их id
     }
@@ -79,6 +80,7 @@ class App extends Component {
             })
         }))
     }
+    
     // метод изменяет like на противоположный у сотрудника
     onToggleLike = (id) => {
         this.setState(({data}) => ({
@@ -91,22 +93,41 @@ class App extends Component {
         }))
     }
 
+    // метод поиска сотрудника
+    searchEmp = (items, term) => { // items строка поиска, term массив для фильтра
+        // если строка поика пуста, то data
+        if (term.length === 0) {
+            return items;
+        }
+        
+        return items.filter(item => {
+            return item.name.indexOf(term) > -1;
+        })
+    }
+    
+    onUpdateSearch = (term) => {
+        this.setState({term});
+    }
+
 
     render() {
+        const {data, term} = this.state;
         const employees = this.state.data.length;
         const increased = this.state.data.filter(item => item.increase).length;
+        const visibleData = this.searchEmp(data, term); // массив, отфилтрованный по строке
+
         return (
             <div className="app">
                 <AppInfo employees={employees} increased={increased}/>
 
                 <div className="search-panel">
-                    <SaerchPanel/>
+                    <SaerchPanel onUpdateSearch={this.onUpdateSearch}/>
 
                     <AppFilter/>
                 </div>
 
                 <EmployeesList /* передаю в компонент массив с данными */
-                    data={this.state.data}
+                    data={visibleData}
                     onDelete={this.deleteItem}
                     onToggleIncrease={this.onToggleIncrease}
                     onToggleLike={this.onToggleLike}
