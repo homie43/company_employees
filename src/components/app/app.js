@@ -20,7 +20,8 @@ class App extends Component {
                 {name: "Vladimir Kopylov", salary: 500, like: false, increase: false, id: 2},
                 {name: "Elton John", salary: 1500, like: false, increase: false, id: 3}
             ],
-            term: ''
+            term: '',
+            filter: 'all'
         }
         this.maxId = 4; // это значение необходимо для новых сотрудников, что бы увеличивался их id
     }
@@ -94,7 +95,7 @@ class App extends Component {
     }
 
     // метод поиска сотрудника
-    searchEmp = (items, term) => { // items строка поиска, term массив для фильтра
+    searchEmp = (items, term) => { // term строка поиска, items массив для фильтра
         // если строка поика пуста, то data
         if (term.length === 0) {
             return items;
@@ -104,17 +105,33 @@ class App extends Component {
             return item.name.indexOf(term) > -1;
         })
     }
-    
+
     onUpdateSearch = (term) => {
         this.setState({term});
     }
 
+    
+    // функция филтрации
+    filterPost = (items, filter) => {
+        if (filter === 'like') {
+            return items.filter(item => item.like);
+        } else if (filter === 'moreThen1000') {
+            return items.filter(item => item.salary > 1000);
+        } else {
+            return items;
+        }
+    }
+
+    // обработчик
+    onUpdateFilter = (filter) => {
+        this.setState({filter});
+    }
 
     render() {
-        const {data, term} = this.state;
+        const {data, term, filter} = this.state;
         const employees = this.state.data.length;
         const increased = this.state.data.filter(item => item.increase).length;
-        const visibleData = this.searchEmp(data, term); // массив, отфилтрованный по строке
+        const visibleData = this.filterPost(this.searchEmp(data, term), filter); // два в одном: сначала фильтрация по поиску, затем по табам
 
         return (
             <div className="app">
@@ -123,7 +140,7 @@ class App extends Component {
                 <div className="search-panel">
                     <SaerchPanel onUpdateSearch={this.onUpdateSearch}/>
 
-                    <AppFilter/>
+                    <AppFilter filter={filter} onUpdateFilter={this.onUpdateFilter}/>
                 </div>
 
                 <EmployeesList /* передаю в компонент массив с данными */

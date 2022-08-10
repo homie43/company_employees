@@ -46,7 +46,7 @@ class EmployeesAddForm extends Component {
                             value={name} // если нужно чтобы реакт компонент рендерил форму и контролировал ее поведение в ответ на пользователский ввод, то атрибут value необходим, туда помещаем значение state
                             onChange={this.onValueChange}
                             required
-                            minlength="3"/>
+                            minLength="3"/>
                         <input type="number"
                             className="form-control new-post-label"
                             placeholder="З/П в $?"
