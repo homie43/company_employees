@@ -9,7 +9,6 @@ import EmployeesAddForm from '../employees-add-form/employees-add-form';
 // импорт стилей
 import './app.css';
 
-// переделаем компонент в классовый, для работы со state
 class App extends Component {
     constructor(props) {
         super(props);
@@ -23,10 +22,9 @@ class App extends Component {
             term: '',
             filter: 'all'
         }
-        this.maxId = 4; // это значение необходимо для новых сотрудников, что бы увеличивался их id
+        this.maxId = 4;
     }
     
-    // метод по иерархии идет на самый низ (в EmployeesListItem) и вызывается по клику на корзину
     deleteItem = (id) => {
         this.setState(({data}) => {
             // алгоритм удаления: 1) получаем элемент(сотрудника) по id; 2) по id ищем нужный объект(то есть индекс) внутри массива data 3) создаем копию массива и перерисовываем приложение
@@ -46,7 +44,7 @@ class App extends Component {
             salary,
             like: false,
             increase: false,
-            id: this.maxId++ // не забываем увеличивать id
+            id: this.maxId++ // увеличивает id
         }
         this.setState(({data}) => {
             return {
@@ -76,8 +74,7 @@ class App extends Component {
                 if (item.id === id) { // и если совпали id, то значит нашелся нужный объект
                     return {...item, increase: !item.increase} // возращается новый объект, который содержит все старые свойства ...item + increase, который поменялся на противоположный(true)
                 }
-                return item; // если условие не выполнено, id не равны, то просто возвращаем объект 
-                // по итогу получаем массив data с новым измененным объектом
+                return item;
             })
         }))
     }
@@ -94,7 +91,7 @@ class App extends Component {
         }))
     }
 
-    // метод поиска сотрудника
+    // поиск сотрудников
     searchEmp = (items, term) => { // term строка поиска, items массив для фильтра
         // если строка поика пуста, то data
         if (term.length === 0) {
@@ -106,29 +103,29 @@ class App extends Component {
         })
     }
 
+    // обработчик поиска
     onUpdateSearch = (term) => {
         this.setState({term});
     }
 
-    
-    // функция филтрации
+    // фильтрация
     filterPost = (items, filter) => {
-        if (filter === 'like') {
+        if (filter === "like") {
             return items.filter(item => item.like);
-        } else if (filter === 'moreThen1000') {
+        } else if (filter === "moreThen1000") {
             return items.filter(item => item.salary > 1000);
         } else {
             return items;
-        }
+        };
     }
 
-    // обработчик
+    // обработчик филтра
     onUpdateFilter = (filter) => {
         this.setState({filter});
     }
 
     render() {
-        const {data, term, filter} = this.state;
+        const {data, term, filter} = this.state; // вытаскиваем из state пропсы
         const employees = this.state.data.length;
         const increased = this.state.data.filter(item => item.increase).length;
         const visibleData = this.filterPost(this.searchEmp(data, term), filter); // два в одном: сначала фильтрация по поиску, затем по табам

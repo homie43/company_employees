@@ -2,9 +2,9 @@ import './employees-list-item.css';
 
 // переделал функциональный компонент в классовый, для работы с состоянием
 const EmployeesListItem = (props) => { // получаем данные из EmployeesList, деструктуризируем пропс, помещаем на страницу
-    // удаляем конструктор со state, и методы onLike, inCrease тк они больше не используются, и возвращаем функциональный компонент
+    
     const {name, salary, increase, like, onDelete, onToggleIncrease, onToggleLike} = props; // пропс onDelete из EmployeesList, вешаем обработчик на кнопку корзины ниже
-
+    
     const classIncrease = increase ? ' increase' : "";
     const classLike = like ? ' like' : "";
 

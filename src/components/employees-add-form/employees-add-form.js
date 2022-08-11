@@ -2,7 +2,6 @@ import { Component } from 'react';
 import './employees-add-form.css';
 
 
-// перепишу компонент в классовый
 class EmployeesAddForm extends Component {
     constructor(props) {
         super(props);
@@ -16,8 +15,7 @@ class EmployeesAddForm extends Component {
     // 1 метод на два инпута 
     onValueChange = (e) => {
         this.setState({ // без callback, тк не важно что было введено ранее
-            [e.target.name]: e.target.value,
-            // [e.target.salary]: e.target.value
+            [e.target.name]: e.target.value
         })
     }
     
@@ -47,6 +45,7 @@ class EmployeesAddForm extends Component {
                             onChange={this.onValueChange}
                             required
                             minLength="3"/>
+
                         <input type="number"
                             className="form-control new-post-label"
                             placeholder="З/П в $?"
